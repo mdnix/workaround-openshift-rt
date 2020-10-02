@@ -4,7 +4,7 @@ metadata:
   name: workaround-openshift-rt
   namespace: workaround-openshift-rt
   labels:
-    k8s-app: fluentd-logging
+    k8s-app: workaround-openshift-rt
 spec:
   selector:
     matchLabels:
@@ -28,10 +28,10 @@ spec:
             memory: 200Mi
         volumeMounts:
         - name: procsys
-          mountPath: /proc/sys/net/ipv4/route
+          mountPath: /proc/
       terminationGracePeriodSeconds: 30
       serviceAccountName: workaround-openshift-rt
       volumes:
       - name: procsys
         hostPath:
-          path: /proc/sys/net/ipv4/route
+          path: /proc/
