@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: workaround-openshift-rt
+  namespace: workaround-openshift-rt
+  labels:
+    k8s-app: fluentd-logging
+spec:
+  selector:
+    matchLabels:
+      name: workaround-openshift-rt
+  template:
+    metadata:
+      labels:
+        name: workaround-openshift-rt
+    spec:
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        effect: NoSchedule
+      containers:
+      - name: workaround-openshift-rt
+        image: TBD
+        resources:
+          limits:
+            memory: 200Mi
+          requests:
+            cpu: 100m
+            memory: 200Mi
+        volumeMounts:
+        - name: procsys
+          mountPath: /proc/sys/net/ipv4/route
+      terminationGracePeriodSeconds: 30
+      serviceAccountName: workaround-openshift-rt
+      volumes:
+      - name: procsys
+        hostPath:
+          path: /proc/sys/net/ipv4/route
