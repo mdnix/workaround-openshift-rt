@@ -26,12 +26,5 @@ spec:
           requests:
             cpu: 100m
             memory: 200Mi
-        volumeMounts:
-        - name: procsys
-          mountPath: /proc/
       terminationGracePeriodSeconds: 30
       serviceAccountName: workaround-openshift-rt
-      volumes:
-      - name: procsys
-        hostPath:
-          path: /proc/
