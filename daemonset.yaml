@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: workaround-openshift-rt
+  namespace: workaround-openshift-rt
+  labels:
+    k8s-app: workaround-openshift-rt
+spec:
+  selector:
+    matchLabels:
+      name: workaround-openshift-rt
+  template:
+    metadata:
+      labels:
+        name: workaround-openshift-rt
+    spec:
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        effect: NoSchedule
+      - operator: Exists
+        effect: NoExecute
+      - operator: Exists
+        effect: NoSchedule
+      containers:
+      - name: workaround-openshift-rt
+        image: TBD
+        resources:
+          limits:
+            memory: 200Mi
+          requests:
+            cpu: 100m
+            memory: 200Mi
+        securityContext:
+          privileged: true
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      hostNetwork: true
+      serviceAccountName: workaround-openshift-rt
