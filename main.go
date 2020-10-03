@@ -16,7 +16,7 @@ func scheduled() {
 }
 
 func flush() {
-	f, err := os.OpenFile("/proc/sys/net/ipv4/route/flush", os.O_WRONLY, 0644)
+	f, err := os.OpenFile("/proc/sys/net/ipv4/route/flush", os.O_WRONLY, 0400)
 	if err != nil {
 		panic(err)
 	}
